@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response
 from model import User, db
+import hashlib
 
 app = Flask(__name__)
 # erstellt neue datenbank Tabelle
@@ -21,10 +22,16 @@ def index():
 def login():
     name = request.form.get("user-name")
     email = request.form.get("user-email")
+    password_clear = request.form.get("user-password")
+    password_hashed = hashlib.sha256(password_clear.encode()).hexdigest()
+
     # Neues Objekt vom Type User (Model)
-    user = User(name=name, email=email)
-    db.add(user)
-    db.commit()
+    user = db.query(User).filter_by(email=email).first()
+    if not user:
+        user = User(name=name, email=email, password=password_hashed)
+        db.add(user)
+        db.commit()
+
     # Cookie
     response = make_response(redirect(url_for('index')))
     response.set_cookie("email", email)

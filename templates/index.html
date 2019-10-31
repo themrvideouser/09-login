@@ -12,13 +12,16 @@
         {% if user %}
             <p>Hallo {{user.name}}</p>
             <p>Email: {{user.email}}</p>
+        {% else %}
+            <form action="/login" method="post">
+                <input type="text" name="user-name" placeholder="Name eingeben:">
+                <br>
+                <input type="email" name="user-email" placeholder="Email eingeben:">
+                <br>
+                <input type="text" name="user-password" placeholder="Passwort eingeben:">
+                <br>
+                <button type="submit">Submit</button>
+            </form>
         {% endif %}
-        <form action="/login" method="post">
-            <input type="text" name="user-name" placeholder="Name eingeben:">
-            <br>
-            <input type="email" name="user-email" placeholder="Email eingeben:">
-            <br>
-            <button type="submit">Submit</button>
-        </form>
     </body>
 </html>
