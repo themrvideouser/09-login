@@ -11,6 +11,7 @@
         <h1>Simple Database</h1>
         {% if user %}
             <p>Hallo {{user.name}}</p>
+            <p>Email: {{user.email}}</p>
         {% endif %}
         <form action="/login" method="post">
             <input type="text" name="user-name" placeholder="Name eingeben:">
